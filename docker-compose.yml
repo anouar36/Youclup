@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   db:
     container_name: postgres_container
@@ -8,7 +6,7 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: root_password
-      POSTGRES_DB: airbnb_db
+      POSTGRES_DB: ClupHub
     volumes:
       - db_data:/var/lib/postgresql/data
     ports:
