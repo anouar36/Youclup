@@ -9,16 +9,20 @@ class StudentClub extends Model
 {
     use HasFactory;
     protected $table = 'StudentsClubs';
-
     protected $fillable = [
         'id',
-        'Studen_id',
-        'Club_id',
+        'Student_id',
     ];
 
-    public function user()
+    public function Student()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(student::class);
     }
+
+    public function club()
+    {
+        return $this->belongsTo(club::class);
+    }
+
 
 }

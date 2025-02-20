@@ -182,6 +182,7 @@
                                   <a href="#?{{ $user->id}}"><ion-icon name="add-circle-outline"></ion-icon></a>
                                   <a href="#?{{ $user->id}}"><ion-icon name="trash-outline"></ion-icon></a>
                                   <a href="#?{{ $user->id}}"><ion-icon name="build-outline"></ion-icon></a>
+
                                 </td>
                             </tr>
                             @endforeach

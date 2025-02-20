@@ -19,6 +19,7 @@ class Events extends Migration
             $table->text("image");
             $table->text("descrption");
             $table->time("data_creation");
+            $table->foreignId('admin_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

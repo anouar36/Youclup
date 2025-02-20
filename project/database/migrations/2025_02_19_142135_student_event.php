@@ -14,7 +14,7 @@ class StudentEvent extends Migration
     public function up()
     {
         Schema::create("studenstEvents",function( Blueprint $table){
-            $table->foreignId('user_id')->constrained()->OnDelete('cascade');
+            $table->foreignId('student_id')->constrained()->OnDelete('cascade');
             $table->foreignId('event_id')->constrained()->onDelete('cascade');
             $table->timestamps();
 
