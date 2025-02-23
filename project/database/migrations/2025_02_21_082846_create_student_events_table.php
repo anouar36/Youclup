@@ -15,6 +15,8 @@ class CreateStudentEventsTable extends Migration
     {
         Schema::create('student_events', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('student_id')->constrained()->onDelete('CASCADE');
+            $table->foreignId('event_id')->constrained()->onDelete('CASCADE');
             $table->timestamps();
         });
     }

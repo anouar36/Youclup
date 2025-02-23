@@ -15,6 +15,8 @@ class CreateStudentClubsTable extends Migration
     {
         Schema::create('student_clubs', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('student_id')->constrained()->onDelete('CASCADE');;
+            $table->foreignId('club_id')->constrained()->onDelete('CASCADE');;
             $table->timestamps();
         });
     }
