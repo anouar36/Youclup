@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use App\Enums\Role;
 
 class User extends Authenticatable
 {
@@ -22,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role_id'
     ];
 
     /**
@@ -34,6 +34,18 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    public function role()
+    {
+        return $this->belongsTo(Role::class); 
+    }
+
+
+    public function solutions()
+    {
+        return $this->hasMany(Solutions::class);
+    }  
+
+
     /**
      * The attributes that should be cast.
      *
@@ -42,14 +54,4 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    public function getRoleAttribute($value)
-    {
-        return Role::tryFrom($value);  // هذا سيعيد كائن Role بناءً على القيمة
-        // تأكد من استخدام الطريقة المناسبة لـ enum
-    }
-
-    public function isAdmin()
-    {
-        return $this->role === Role::Admin;
-    }
 }

@@ -15,6 +15,9 @@
   --gray: #f5f5f5;
   --black1: #222;
   --black2: #999;
+  --red: #f44336;
+  --green: #4CAF50;
+  --orange: #FF9800;
 }
 
 body {
@@ -244,13 +247,9 @@ body {
   margin-top: 5px;
 }
 
-
 .cardBox .card .iconBx {
   font-size: 3.5rem;
   color: var(--black2);
-}
-#add{
-  background:   var(--blue);
 }
 
 .cardBox .card:hover {
@@ -262,18 +261,20 @@ body {
   color: var(--white);
 }
 
-/* ================== Order Details List ============== */
+/* ================== Details List ============== */
 .details {
   position: relative;
   width: 100%;
   padding: 20px;
   display: grid;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: 1fr 1fr;
   grid-gap: 30px;
-  /* margin-top: 10px; */
 }
 
-.details .recentOrders {
+.details .addQuizSection,
+.details .recentQuizzes,
+.details .recentOrders,
+.details .recentCustomers {
   position: relative;
   display: grid;
   min-height: 500px;
@@ -286,12 +287,14 @@ body {
 .details .cardHeader {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
 }
+
 .cardHeader h2 {
   font-weight: 600;
   color: var(--blue);
 }
+
 .cardHeader .btn {
   position: relative;
   padding: 5px 10px;
@@ -299,153 +302,232 @@ body {
   text-decoration: none;
   color: var(--white);
   border-radius: 6px;
+  font-weight: 500;
+  transition: all 0.3s ease;
 }
 
+.cardHeader .btn:hover {
+  background: #3a31b0;
+}
+
+/* ============== Quiz Form Styles ================ */
+.quizFormContainer {
+  display: none;
+  margin-top: 20px;
+  transition: all 0.3s ease;
+}
+
+.quizFormContainer.active {
+  display: block;
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.quizForm {
+  width: 100%;
+  padding: 20px;
+  background-color: var(--gray);
+  border-radius: 10px;
+}
+
+.formGroup {
+  margin-bottom: 15px;
+}
+
+.formRow {
+  display: flex;
+  gap: 20px;
+}
+
+.formRow .formGroup {
+  flex: 1;
+}
+
+.formGroup label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: var(--black1);
+}
+
+.formGroup input,
+.formGroup select,
+.formGroup textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border 0.3s ease;
+}
+
+.formGroup input:focus,
+.formGroup select:focus,
+.formGroup textarea:focus {
+  border-color: var(--blue);
+  outline: none;
+}
+
+.formGroup textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.formActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.btnCancel,
+.btnSubmit {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.btnCancel {
+  background-color: #f1f1f1;
+  color: var(--black1);
+}
+
+.btnSubmit {
+  background-color: var(--blue);
+  color: var(--white);
+}
+
+.btnCancel:hover {
+  background-color: #e0e0e0;
+}
+
+.btnSubmit:hover {
+  background-color: #3a31b0;
+}
+
+/* ================== Tables ============== */
 .details table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 10px;
+  margin-top: 15px;
 }
+
 .details table thead td {
   font-weight: 600;
+  background-color: var(--gray);
+  padding: 12px 10px;
 }
-.details .recentOrders table tr {
+
+.details table tr {
   color: var(--black1);
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
-.details .recentOrders table tr:last-child {
+
+.details table tr:last-child {
   border-bottom: none;
 }
-.details .recentOrders table tbody tr:hover {
-  background: var(--blue);
-  color: var(--white);
+
+.details table tr:hover {
+  background: rgba(42, 33, 133, 0.05);
 }
-.details .recentOrders table tr td {
-  padding: 10px;
+
+.details table tbody tr:hover td {
+  color: var(--black1);
 }
-.details .recentOrders table tr td:last-child {
-  text-align: end;
+
+.details table tr td {
+  padding: 12px 10px;
+  vertical-align: middle;
 }
-.details .recentOrders table tr td:nth-child(2) {
-  text-align: end;
-}
-.details .recentOrders table tr td:nth-child(3) {
-  text-align: center;
-}
-.status.delivered {
-  padding: 2px 4px;
-  background: #8de02c;
+
+.status {
+  padding: 4px 8px;
   color: var(--white);
   border-radius: 4px;
   font-size: 14px;
   font-weight: 500;
+  text-align: center;
+  display: inline-block;
+  min-width: 80px;
+}
+
+.status.delivered {
+  background: #4CAF50;
+}
+
+.status.pending {
+  background: #FF9800;
+}
+
+.status.return {
+  background: #f00;
+}
+
+.status.inProgress {
+  background: #1795ce;
+}
+
+.actionButtons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.actionButtons a,
+.actionButtons button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-}
-.button-container {
-  display: flex;
-  gap: 10px; /* Adjust the space between the buttons */
-  align-items: center; /* Vertically centers the buttons if needed */
-}
-.status.delivered ion-icon {
-  font-size: 1.5rem; /* Adjust size if needed */
-}
-.status.delivered button {
-  background: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 4px;
+  color: var(--white);
   border: none;
   cursor: pointer;
-}
-.status.pending {
-  padding: 2px 4px;
-  background: #e9b10a;
-  color: var(--white);
-  border-radius: 4px;
-  font-size: 14px;
-  font-weight: 500;
-}
-.status.return {
-  padding: 2px 4px;
-  background: #f00;
-  color: var(--white);
-  border-radius: 4px;
-  font-size: 14px;
-  font-weight: 500;
-}
-.status.inProgress {
-  padding: 2px 4px;
-  background: #1795ce;
-  color: var(--white);
-  border-radius: 4px;
-  font-size: 14px;
-  font-weight: 500;
+  transition: all 0.3s ease;
 }
 
-
-.recentCustomers {
-  position: relative;
-  display: grid;
-  min-height: 500px;
-  padding: 20px;
-  background: var(--white);
-  box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
-  border-radius: 20px;
-}
-.recentCustomers .imgBx {
-  position: relative;
-  width: 40px;
-  height: 40px;
-  border-radius: 50px;
-  overflow: hidden;
+.editBtn {
+  background-color: #2196F3;
 }
 
-.recentOrders .imgBx {
-  position: relative;
-  width: 40px;
-  height: 40px;
-  border-radius: 50px;
-  overflow: hidden;
-}
-.recentOrders .imgBx img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.viewBtn {
+  background-color: #4CAF50;
 }
 
+.deleteBtn {
+  background-color: #f44336;
+}
 
+.editBtn:hover, .viewBtn:hover, .deleteBtn:hover {
+  opacity: 0.8;
+}
 
-.recentCustomers .imgBx img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-.recentCustomers table tr td {
-  padding: 12px 10px;
-}
-.recentCustomers table tr td h4 {
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 1.2rem;
-}
-.recentCustomers table tr td h4 span {
-  font-size: 14px;
+.noData {
+  text-align: center;
   color: var(--black2);
-}
-.recentCustomers table tr:hover {
-  background: var(--blue);
-  color: var(--white);
-}
-.recentCustomers table tr:hover td h4 span {
-  color: var(--white);
+  padding: 20px 0 !important;
 }
 
 /* ====================== Responsive Design ========================== */
+@media (max-width: 1200px) {
+  .details {
+    grid-template-columns: 1fr;
+  }
+  
+  .formRow {
+    flex-direction: column;
+    gap: 15px;
+  }
+}
+
 @media (max-width: 991px) {
   .navigation {
     left: -300px;
@@ -470,11 +552,24 @@ body {
   .details {
     grid-template-columns: 1fr;
   }
-  .recentOrders {
+  .cardHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .cardHeader .btn {
+    padding: 8px 15px;
+    font-size: 14px;
+  }
+  .recentQuizzes {
     overflow-x: auto;
   }
   .status.inProgress {
     white-space: nowrap;
+  }
+  
+  .actionButtons {
+    flex-direction: row;
   }
 }
 
@@ -506,4 +601,101 @@ body {
     right: 0;
     left: initial;
   }
+  
+  .formActions {
+    flex-direction: column;
+  }
+  
+  .btnCancel, .btnSubmit {
+    width: 100%;
+  }
+}
+
+ /* Additional styles for the quiz form */
+ .quiz-form {
+  margin-top: 20px;
+  padding: 15px;
+  background: var(--white);
+  border-radius: 10px;
+  box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+}
+
+.quiz-form input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid var(--black2);
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.quiz-form button {
+  background: var(--blue);
+  color: var(--white);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.quiz-form button:hover {
+  opacity: 0.9;
+}
+
+.question-checkbox {
+  margin-right: 10px;
+}
+
+/* Action buttons for Recent Quizzes */
+.action-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-update,
+.btn-delete {
+  cursor: pointer;
+  font-size: 1.2rem;
+  padding: 5px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.btn-update {
+  color: #4CAF50;
+}
+
+.btn-delete {
+  color: #F44336;
+}
+
+.btn-update:hover,
+.btn-delete:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Quiz status styles */
+.quiz-status {
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  margin-top: 5px;
+  display: inline-block;
+}
+
+.quiz-status.active {
+  background: #4CAF50;
+  color: white;
+}
+
+.quiz-status.draft {
+  background: #FFC107;
+  color: black;
+}
+
+.quiz-status.archived {
+  background: #9E9E9E;
+  color: white;
 }

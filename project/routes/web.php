@@ -1,6 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\admin\QuizzController;
+use App\Http\Controllers\QuestionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,41 +18,54 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Auth::routes();
-
-
 Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
-
-Route::get('/user/home', [App\Http\Controllers\Auth\HomeController::class, 'index'])->name('user.home');
-
-Route::get('/admin/dashboard', [App\Http\Controllers\admin\DashboardController::class, 'index'])->name('admin.dashboard');
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
 
 
-Route::delete('/admin/dashboard/{id}', [App\Http\Controllers\admin\DashboardController::class, 'destroy'])->name('User.destroy');
+Route::get('/login', function () {
+    return view('auth.login');
+})->name('login');
 
-Route::get('/login', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [AuthController::class, 'login'])->name('login.post');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::get('/logout', function () { Auth::logout(); return redirect()->route('login'); });
+Route::middleware(['auth'])->group(function () {
+    Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+    Route::get('/user/dashboard', [UserController::class, 'index'])->name('user.dashboard');
+});
 
-// all thicks of  clubs
-Route::get('/Clubs/index', [App\Http\Controllers\admin\ClubController::class, 'index'])->name('Clubs.index');
-Route::DELETE('/Clubs/destroy/{id}', [App\Http\Controllers\admin\ClubController::class, 'destroy'])->name('Clubs.destroy');
-Route::get('/Clubs/create', [App\Http\Controllers\admin\ClubController::class, 'create'])->name('Clubs.create');
-Route::POST('/Clubs/store', [App\Http\Controllers\admin\ClubController::class, 'store'])->name('Clubs.store');
-
-
-Route::GET('/Clubs/edit/{id}', [App\Http\Controllers\admin\ClubController::class, 'edit'])->name('Clubs.edit');
-Route::POST('/Clubs/update/{id}', [App\Http\Controllers\admin\ClubController::class, 'updat'])->name('Clubs.updat');
-
-
-
+// THis for quizzfile 
+Route::get('/admin/quizz',[QuizzController::class,'index'])->name('admin.quizz');
+Route::get('/admin/question',[QuizzController::class,'index'])->name('admin.quizz');
+Route::get('/admin/users',[QuizzController::class,'index'])->name('admin.quizz');
 
 
+// THis for quizzfile 
+Route::post('/quizz/store', [QuizzController::class, 'store'])->name('quizz.store');
+Route::get('/quizz/destroy',[QuizzController::class,'destroy'])->name('quizz.destroy');
+Route::get('/quizz/edit',[QuizzController::class,'edit'])->name('quizz.edit');
+Route::post('/quizz/create',[QuizzController::class,'create'])->name('quizz.create');
+
+// this for question
+Route::get('/question/index',[QuestionController::class,'index'])->name('questions.index');
+Route::post('/repence', [Repences::class, 'store'])->name('repence.store');
+Route::post('/qestion/store', [QuestionController::class, 'store'])->name('question.store');
+ 
 
 
 
 
+
+
+
+
+
+
+
+
+require __DIR__.'/auth.php';

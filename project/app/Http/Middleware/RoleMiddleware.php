@@ -4,8 +4,8 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use App\Enums\Role; 
-use App\Http\Controllers\Auth\LoginController;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Role;
 
 class RoleMiddleware
 {
@@ -16,19 +16,14 @@ class RoleMiddleware
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next, $role)
     {
-        if (auth()->check()){
-            if(auth()->user()->role === Role::Admin) {
-                return $next($request);
+        $userRole = Role::where('user_id', Auth::id())->first();
 
-            }elseif(auth()->user()->role === Role::Student) {
-                return $next($request);
-                
-            }else{
-                return redirect()->route('user.home');
-            }
+        if (!$userRole || $userRole->nameRole !== $role) {
+            abort(403, 'Unauthorized'); 
         }
-        return redirect()->route('login'); 
+
+        return $next($request);
     }
 }
